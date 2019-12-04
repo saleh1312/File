@@ -1,0 +1,172 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Security.Principal;
+using System.Security.AccessControl;
+using System.IO.MemoryMappedFiles;
+
+namespace ConsoleApplication36
+{
+    class Program
+    {
+        static string path = "hello.txt";
+        static void Main(string[] args)
+        {
+
+            //AppendAllLines(string PATH , ienumerable<string> LINES TO ADD ) + Encoding & ASYNC
+            //ReadLines(PATH)+Encoding ->Inumerable<string>
+           // enumerable();
+            //AppendAllText(string PATH , string CONTENT )+ Encoding & ASYNC
+
+
+            //                                 &Methods return StreamWriter& 
+
+            //AppendText(PATH) : open file and change pointer to last char in file ( add text on it )
+            //CreateText(PATH) : open file and trunct and add text ( delete anything add wrte new )
+
+            //                                 &Methods return StreamReader&
+
+            //OpenText(PATH)
+
+            //                                 &Methods return FileStream&
+
+            //Open(string PATH , FileMode ) + FileAccess + FileShare
+            //OpenRead(PATH)  // FileMode = Open , FileAccess = Read , FileShare = Read
+            //OpenWrite(PATH) // FileMode = OpenOrCreate , FileAccess = Read , FileShare = None
+
+
+            //                                      &OtherMethods&
+
+            //ReadAllBytes(PATH) -> byte[] //ASYNC
+            //ReadAllLines(Path)+Encoding -> string[] //ASYNC
+            //ReadAllText(PATH)+Encoding ->string //ASYNC
+            //Replace(string PATH OF FILE THAT IT IS CONTENT WILL REPLACE TO ANOTHER , string FILE TO REPLACE,string BACK UP)
+            //WriteAllBytes(PATH , byte[]) //ASYNC
+            //WriteAllLines(PATH , string[]) +Encoding //ASYNC
+            //WriteAllLines(PATH , Ienumerable<string>) +Encoding //ASYNC
+            //WriteAllText(PATH , CONTENT) //ASYNC
+
+
+            //get and set methdos -->important method GetAttriputes(PATH)
+              // attri();
+
+            //Move(Path , destinishon , bool if alreadey exist over write ?)
+            //Exist(PATH)
+            //Create(Path) + int + fileopton + file security -> FileStrem 
+            
+
+
+            Console.ReadKey();
+
+        }
+
+
+
+
+
+        [Flags]
+        enum names
+        {
+            noor =32,
+            abdo =64,
+            raed =128,
+            
+        }
+        static void attri()
+        {
+            
+            
+            names name = names.abdo | names.raed;
+
+            names n = (name & names.noor);
+
+
+            Console.WriteLine(Convert.ToInt32(n));
+            if (n== names.noor)
+            {
+                Console.WriteLine(Convert.ToInt32(n));
+            }
+        
+        }
+
+
+
+        //wrong numbers
+        //4 =100,8 =1000,22=10110
+        
+
+
+
+        static void enumerable()
+        {
+            File.Delete("hello.txt");
+            File.Delete("holidays.txt");
+
+
+
+            create();
+
+
+
+            var holidays = from days in File.ReadLines("hello.txt") where (days.Contains("friday") || days.Contains("satrday")) select days;
+            var holidays_in_march = from holi in holidays where holi.Contains("mar") select holi;
+
+
+
+            File.AppendAllLines("holidays.txt", holidays_in_march);
+
+
+
+            List<string> xx = holidays_in_march.ToList();
+            foreach (string word in xx)
+            {
+                Console.WriteLine(word);
+            }
+
+        }
+
+        static void create()
+        {
+            string[] months = new string[12]
+            {
+                "jan","feb","mar","apr","may","jun","july","aug","sept","oct","nov","dec"
+            };
+
+            
+
+            string[] days = new string[7]
+            {
+                "satrday","sunday","monday","tuesday","wensday","thursday","friday"
+            };
+
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                int day = 0;
+                sw.AutoFlush = true;
+                for(int m =0;m<12;m++)
+                {
+                    for(int d =1;d<=30;d++)
+                    {
+                        
+                            
+                        sw.WriteLine(days[day] + "   "+(d)+"  " + months[m]);
+                        if(day==6)
+                        {
+                            day = 0;
+                            continue;
+                        }
+
+                        day++;
+                            
+                        
+                        
+                    }
+                }
+                
+            }
+        }
+    }
+}
