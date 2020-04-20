@@ -1,0 +1,36 @@
+ 
+            string[] days = new string[] { "satrday", "sunday", "monday", "tuesday", "wensday", "thursday", "friday" };
+            int index_of_days = 2;
+
+            int day = 7;
+            int month = 11;
+            int year = 2017;
+
+            Console.WriteLine($"day : {day}   month : {month}  d : {days[ index_of_days]}");
+            int days_for_escape = 0;
+
+            Console.Write("enter days to escape : ");
+            days_for_escape = Convert.ToInt32(Console.ReadLine());
+            
+            for(int x=0;x<(days_for_escape-1);x++)
+            {
+               
+                if(day == 30)
+                {
+                    day = 0;
+                    month++;
+                }
+
+                if(index_of_days == 6)
+                {
+                    index_of_days = 0;
+                    day++;
+                    continue;
+                }
+
+                day++;
+                index_of_days++;
+                
+            }
+            Console.WriteLine($"day : {day}   month : {month}   d : {days[index_of_days]}");
+            Console.ReadKey();
